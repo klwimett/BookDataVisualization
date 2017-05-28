@@ -8,7 +8,6 @@ with open("just_titles_150.json") as infile:
 
 titles_split = []
 
-
 def wordListToFreqDict(wordlist):
     wordfreq = [wordlist.count(p) for p in wordlist]
     return dict(zip(wordlist,wordfreq))
@@ -17,7 +16,6 @@ for t in titles:
     t = str(t).strip()
     words_per_title = t.split(" ")
     titles_split += words_per_title
-    
     
 stopwords = ['a', 'about', 'above', 'across', 'after', 'afterwards', 'The']
 stopwords += ['again', 'against', 'all', 'almost', 'alone', 'along']
@@ -71,35 +69,24 @@ stopwords += ['whoever', 'whole', 'whom', 'whose', 'why', 'will', 'with']
 stopwords += ['within', 'without', 'would', 'yet', 'you', 'your']
 stopwords += ['yours', 'yourself', 'yourselves']
     
-# y1 = 10
-
 def removeStopwords(wordlist, stopwords):
     return [w for w in wordlist if w not in stopwords]
 
 titles_split = removeStopwords(titles_split, stopwords)
 
-a = wordListToFreqDict(titles_split)
-for k, v in a.items():
+freqDict = wordListToFreqDict(titles_split)
+for k, v in freqDict.items():
+    # If the word occurs less then 20 remove it
     if v < 20:
-        del a[k]
-    
-# for y in sorted(a.keys()):
-#     y1 = y1 + 22
-#     barwidth = a[y]
-#     fill(0.8, 0, 0)
-#     rect(250, y1 - 18, barwidth, 20)
-#     fill(0.5, 0.45, 0)
-#     text(y, 20, y1)
-#     text(str(barwidth), 370, y1)
+        del freqDict[k]
 
-y1 = 0
-for y in sorted(a.keys()):
-    y1 = y1
-    barwidth = a[y] * 3
-    barheight = a[y] * 4
+for word in sorted(freqDict.keys()):
+    y1 = 0
+    bookwidth = freqDict[word] * 3
+    bookheight = freqDict[word] * 4
     nofill()
     stroke('black')
     translate(10,300)
-    rect(0,0, barwidth, barheight)
+    rect(0,0, bookwidth, bookheight)
     fill('black')
-    text (y, 10, y1)
+    text (word, 10, y1, align=CENTER)
