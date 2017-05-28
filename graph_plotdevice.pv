@@ -73,6 +73,11 @@ stopwords += ['yours', 'yourself', 'yourselves']
     
 # y1 = 10
 
+def removeStopwords(wordlist, stopwords):
+    return [w for w in wordlist if w not in stopwords]
+
+titles_split = removeStopwords(titles_split, stopwords)
+
 a = wordListToFreqDict(titles_split)
 for k, v in a.items():
     if v < 20:
