@@ -1,0 +1,34 @@
+size(450, 900)
+background(1)
+
+import json
+
+with open('just_titles_150.json') as file1:
+    titles = json.load(file1)
+
+titles_split = []
+
+def wordListToFreqDict(wordlist):
+    wordfreq = [wordlist.count(p) for p in wordlist]
+    return dict(zip(wordlist,wordfreq))
+
+for t in titles:
+    t = str(t).strip()
+    words_per_title = t.split(" ")
+    titles_split += words_per_title
+
+freqDict = wordListToFreqDict(titles_split)
+for k, v in freqDict.items():
+    # If the word occurs less then 20 remove it
+    if v < 4:
+        del freqDict[k]
+
+for word in sorted(freqDict.keys()):
+    y1 = 0
+    barwidth = freqDict[word]
+    fill(0.8, 0, 0)
+    rect(250, y1 + 12, barwidth, 20)
+    fill(0.5, 0.45, 0)
+    translate (0,30)
+    text(word, 20, y1)
+    text(str(barwidth), 370, y1)
